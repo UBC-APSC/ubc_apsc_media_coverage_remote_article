@@ -1,0 +1,54 @@
+/* form items */
+.form-item--remote-article__url {
+	display:inline-block;
+	width: 75%;
+	max-width:100%;
+}
+.remote-article-url,
+#edit-field-media-article-title-0-value {
+	width:100%;
+}
+
+
+/* results display */
+.alternative-options-label {
+	font-size: .875rem;
+	font-weight:600;
+}
+
+table.alternative-options {
+	margin-top:0;	
+	margin-bottom:0.5rem;
+	font-size:0.875rem;
+}
+
+table.alternative-options tr td:first-of-type {
+	max-width:2rem;
+	width:2rem;
+}
+
+table.alternative-options tr td {
+	max-width:100%;
+	width:calc(100% - 7rem);
+    word-break: break-all;
+}
+
+table.alternative-options tr.odd,
+table.alternative-options tbody tr:nth-child(2n+1) {
+  background-color: rgba(225, 243, 249, .5);
+}
+
+table.alternative-options tr td:last-of-type {
+	max-width:5rem;
+	width:5rem;
+}
+
+.not-found {
+	color:orange;
+	font-weight:600;
+}
+
+/* utilities */
+.inline-block {
+	display:inline-block;
+}

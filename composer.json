@@ -1,0 +1,18 @@
+{
+    "name": "apsc-web/ubc_apsc_media_coverage_remote_article",
+    "description": "Adds AJAX enabled form field to node form for retrieving remote URL metadata, downloads remote images for local processing. Uses this metadata to auto-populate form fields.",
+    "type": "drupal-module",
+    "require": {
+    },
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "apsc-web",
+            "email": "web@apsc.ubc.ca",
+            "homepage": "https://apsc.ubc.ca"
+        }
+    ],
+    "support": {
+		"issues": "https://apsc.ubc.ca/web"
+	}
+}

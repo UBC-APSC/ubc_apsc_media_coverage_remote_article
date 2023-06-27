@@ -1,0 +1,9 @@
+form-fill-assist:
+  version: 1.x
+  css:
+    base:
+      css/form-fill-assist.css: {}
+  js:
+    js/form-fill-assist.js: {}
+  dependencies:
+    - core/jquery
