@@ -191,6 +191,12 @@ EOT;
 							case 'time':
 								$alt_value = date('H:m:s', strtotime($fetch_tags[$key]['value'][$i]));
 							break;
+							case 'site':
+								if(is_string($fetch_tags[$key]['value'][$i]))
+									$alt_value = $fetch_tags[$key]['value'][$i];
+								else
+									$alt_value = $fetch_tags[$key]['value'][$i]->name;
+							break;
 							default:
 								// sometime values are not processed correctly and return as object, serialize to prevent error on return
 								$alt_value = is_string($fetch_tags[$key]['value'][$i]) ? $fetch_tags[$key]['value'][$i] : serialize($fetch_tags[$key]['value'][$i]);
@@ -335,7 +341,7 @@ function get_remote_media($img_src, $alt = '') {
 	$image_details = explode('/',$file_details['mime']);
 	
 	if($image_details[0] == 'image') {
-		$directory = 'public://media-coverage-images/remote-images/';
+		$directory = 'public://media-coverage-images/remote-images/' . date('Y-m') . '/';
 
 		$file_system = \Drupal::service('file_system');
 		$file_system->prepareDirectory($directory, FileSystemInterface:: CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
@@ -344,8 +350,13 @@ function get_remote_media($img_src, $alt = '') {
 		$image_info = pathinfo(strtok($img_src, '?'));
 		
 		// try to create a sanitised file name, re-add file extensions as occasionally missing, creating issues with display
-		$image_filename = $image_info['filename'].'.'.( empty($image_info['extension']) ? $image_details[1] : $image_info['extension']);
-		
+		if (empty($image_info['extension'])) {
+			$extension = $image_details[1];
+		} else {
+			$parts = explode(';', $image_info['extension']);
+			$extension = $parts[0];
+		}		
+		$image_filename = $image_info['filename']. '_'. date('YmdHis') .'.'. $extension;
 		// would it be better to have article title here?
 		$alt = ( empty($alt) ? $image_filename : $alt);
 		
