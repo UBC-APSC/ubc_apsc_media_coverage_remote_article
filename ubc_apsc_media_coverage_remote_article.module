@@ -179,6 +179,7 @@ function ubc_apsc_media_coverage_remote_article_ajax_callback(array &$form, Form
 	// retrieve autofill URL, attempt to fetch tags from source
 	$url = $form_state->getValue('remote_article__url');
     $fetch_tags = file_get_remote_tags($url,$fetch_tags,'media-coverage-images');
+	$confirmation_message = '';
 	$message_status = 'messages--status';
 	
 	$response = new AjaxResponse();
@@ -247,13 +248,13 @@ function ubc_apsc_media_coverage_remote_article_ajax_callback(array &$form, Form
 		  // specific message below field if date not found
 		  $response->addCommand(new AfterCommand($fetch_tags[$key]['selector'], '<div class="alternative-options-label not-found">Please find '.$key.'</div>'));  
 		  $confirmation_message .= '<p>Check for missing value <strong>'.$key.'</strong></p>';
-		  $message_status = ($image_media->size_status[1] != 'messages--error') ?: 'messages--warning';
+		  $message_status = ($message_status != 'messages--error') ?: 'messages--warning';
 	  }
 	  else {
 		  //  message below field if value not found
 		  $response->addCommand(new AfterCommand($fetch_tags[$key]['selector'], '<div class="alternative-options-label not-found">Missing '.$key.'</div>'));  
 		  $confirmation_message .= '<p>Check for missing value <strong>'.$key.'</strong></p>';
-		  $message_status = ($image_media->size_status[1] != 'messages--error') ?: 'messages--warning';
+		  $message_status = ($message_status != 'messages--error') ?: 'messages--warning';
 	  }
 	}
 	
@@ -318,6 +319,7 @@ function ubc_apsc_announcement_remote_article_ajax_callback(array &$form, FormSt
 	// retrieve autofill URL, attempt to fetch tags from source
 	$url = $form_state->getValue('remote_article__url');
     $fetch_tags = file_get_remote_tags($url,$fetch_tags,'announcement-images');
+	$confirmation_message = '';
 	$message_status = 'messages--status';
 	
 	$response = new AjaxResponse();
@@ -380,7 +382,7 @@ function ubc_apsc_announcement_remote_article_ajax_callback(array &$form, FormSt
 		  //  message below field if value not found
 		  $response->addCommand(new AfterCommand($fetch_tags[$key]['selector'], '<div class="alternative-options-label not-found">Missing '.$key.'</div>'));
 		  $confirmation_message .= '<p>Check for missing values <strong>'.$key.'</strong></p>';
-		  $message_status = ($image_media->size_status[1] != 'messages--error') ?: 'messages--warning';
+		  $message_status = ($message_status != 'messages--error') ?: 'messages--warning';
 	  }
 	}
 	$response->addCommand(new AfterCommand('#edit-field-announcement-meta-tags-0-advanced-robots-robots-noindex', '', ['checked', true]));
