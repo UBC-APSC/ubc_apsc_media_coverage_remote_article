@@ -8,6 +8,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\File\FileExists;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\AfterCommand;
 use Drupal\Core\Ajax\InvokeCommand;
@@ -361,7 +362,7 @@ function get_remote_media($img_src, $alt = '') {
 		$alt = ( empty($alt) ? $image_filename : $alt);
 		
 		$file_repository = \Drupal::service('file.repository');
-		$image = $file_repository->writeData($image_data, "$directory$image_filename", FileSystemInterface::EXISTS_REPLACE);
+		$image = $file_repository->writeData($image_data, "$directory$image_filename", FileExists::Replace);
 		
 		
 		$current_user_id = \Drupal::currentUser()->id();
