@@ -492,7 +492,7 @@ function file_get_remote_tags($url,$fetch_tags,$img_dir = '') {
 		$fetch_tags['title']['value'][] = $backup_title;
 	
 	if(!empty($fetch_tags['image']['value'])) {
-		$fetch_tags['remote_media'] = get_remote_media($fetch_tags['image']['value'][0], $fetch_tags['image:alt']['value'][0], $img_dir);
+		$fetch_tags['remote_media'] = get_remote_media($fetch_tags['image']['value'][0], @$fetch_tags['image:alt']['value'][0], $img_dir);
 		$fetch_tags['image:alt']['value'][0] = $fetch_tags['image:alt']['value'][0] ?? $fetch_tags['remote_media']->alt_text;
 	}
 	
