@@ -52,6 +52,12 @@ function ubc_apsc_media_coverage_remote_article_form_alter(&$form, FormStateInte
 			];
 			break;
 		case 'node_ubc_announcement_form':
+			// Determine external announcement type term ID
+			$external_term_id = '';
+			foreach($form['field_announcement_type']['widget']['#options'] as $option_key => $option_value)
+				if($option_value == 'External')
+					$external_term_id = $option_key;
+			
 			$form['remote_article__url'] = [
 			  '#type' => 'url',
 			  '#title' => 'Auto fill from remote article URL',
@@ -60,9 +66,8 @@ function ubc_apsc_media_coverage_remote_article_form_alter(&$form, FormStateInte
 			  '#weight' => '-1',
 			  '#maxlength' => 2084,
 			  '#states' => [
-				// Show this field only if the radio 'External' announcement type is selected
 				'visible' => [
-					':input[name="field_announcement_type"]' => ['value' => '259'],
+					':input[name="field_announcement_type"]' => ['value' => $external_term_id],
 				],
 			  ],
 			];
@@ -78,11 +83,15 @@ function ubc_apsc_media_coverage_remote_article_form_alter(&$form, FormStateInte
 				],
 			  ],
 			  '#states' => [
-				// Show this field only if the radio 'External' announcement type is selected
 				'visible' => [
-					':input[name="field_announcement_type"]' => ['value' => '259'],
+					':input[name="field_announcement_type"]' => ['value' => $external_term_id],
 				],
 			  ],
+			];
+			$form['field_announcement_meta_tags']['widget'][0]['advanced']['robots']['robots']['noindex']['#states'] = [
+				'checked' => [
+					':input[name="field_announcement_type"]' => ['value' => $external_term_id],
+				],
 			];
 			break;
 		default:
@@ -104,7 +113,7 @@ function ubc_apsc_media_coverage_remote_article_node_presave($entity) {
   switch ($entity->bundle()) {
     case 'media_coverage':
       // only on new content 
-	  if ($entity->isNew() && $entity->revision_log->value == 'Node created programatically') {
+	  if ($entity->isNew() && $entity->revision_log->value == 'Node created programmatically') {
 		  $article_date = $entity->get('field_media_article_date')->getValue();
 		  $entity->get('created')->setValue(strtotime($article_date[0]['value']));
 	  }
@@ -261,7 +270,7 @@ function ubc_apsc_media_coverage_remote_article_ajax_callback(array &$form, Form
 	
 	// add status message operation complete, include revision log message
     $response->addCommand(new PrependCommand('.region-highlighted', get_process_notification($confirmation_message, $message_status)));
-	$response->addCommand(new HtmlCommand('#edit-revision-log-0-value', 'Node created programatically'));
+	$response->addCommand(new HtmlCommand('#edit-revision-log-0-value', 'Node created programmatically'));
 	
 	return $response;
 }
@@ -389,7 +398,7 @@ function ubc_apsc_announcement_remote_article_ajax_callback(array &$form, FormSt
 	$response->addCommand(new AfterCommand('#edit-field-announcement-meta-tags-0-advanced-robots-robots-noindex', '', ['checked', true]));
 	// add status message operation complete
     $response->addCommand(new PrependCommand('.region-highlighted', get_process_notification($confirmation_message, $message_status)));
-	$response->addCommand(new HtmlCommand('#edit-revision-log-0-value', 'Node created programatically'));
+	$response->addCommand(new HtmlCommand('#edit-revision-log-0-value', 'Node created programmatically'));
 
 	return $response;
 }
