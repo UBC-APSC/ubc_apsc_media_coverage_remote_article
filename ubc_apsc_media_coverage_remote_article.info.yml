@@ -2,7 +2,7 @@ name: 'UBC APSC Media Coverage Remote Article'
 type: module
 description: 'Alters the media coverage and announcement forms to enable retrieving remote article meta data. Downloads remote images locally for processing.'
 package: 'UBC APSC'
-core_version_requirement: ^9.4 || ^10
+core_version_requirement: ^10|| ^11
 dependencies:
   - drupal:node
 

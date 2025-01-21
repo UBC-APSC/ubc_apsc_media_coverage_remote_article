@@ -4,19 +4,20 @@
  * @file
  * Implement and invoke hooks to customise node media coverage add and include autofill functionality.
  */
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\File\FileSystemInterface;
-use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\AfterCommand;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\Ajax\PrependCommand;
 use Drupal\Core\Ajax\RemoveCommand;
-use Drupal\ubc_apsc_media_coverage_remote_article\Ajax\UpdateCkeditorText;
-use Drupal\media\Entity\Media;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\File\FileExists;
+use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\file\Entity\File;
+use Drupal\media\Entity\Media;
+use Drupal\ubc_apsc_media_coverage_remote_article\Ajax\UpdateCkeditorText;
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -529,7 +530,7 @@ function get_remote_media($img_src, $alt = '', $img_dir = '') {
 		$directory = 'public://'.$img_dir.'/remote-images/' . date('Y-m') . '/';
 
 		$file_system = \Drupal::service('file_system');
-		$file_system->prepareDirectory($directory, FileSystemInterface:: CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
+		$file_system->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
 		
 		$image_data = file_get_contents($img_src);
 		$image_info = pathinfo(strtok($img_src, '?'));
@@ -546,7 +547,7 @@ function get_remote_media($img_src, $alt = '', $img_dir = '') {
 		$alt = ( empty($alt) ? $image_filename : $alt);
 		
 		$file_repository = \Drupal::service('file.repository');
-		$image = $file_repository->writeData($image_data, "$directory$image_filename", FileSystemInterface::EXISTS_REPLACE);
+		$image = $file_repository->writeData($image_data, "$directory$image_filename", FileExists::Replace);
 		$image->alt_text = $alt;
 		
 		$current_user_id = \Drupal::currentUser()->id();
