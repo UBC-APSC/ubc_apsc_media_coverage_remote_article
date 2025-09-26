@@ -623,3 +623,17 @@ function check_image_size($height, $width) {
 	$img_notification .= '<p>';
 	return [$img_notification, $message_status];
 }
+
+/**
+ * Implements hook_update_projects_alter(&$projects).
+ * Alter the list of projects before fetching data and comparing versions.
+ *
+ * Hide projects from the list to avoid "No available releases found" warnings on the available updates report
+ *
+ * @see \Drupal\update\UpdateManager::getProjects()
+ * @see \Drupal\Core\Utility\ProjectInfo::processInfoList()
+ */
+function ubc_apsc_media_coverage_remote_article_update_projects_alter(&$projects) {
+  // Hide a site-specific module from the list.
+  unset($projects['ubc_apsc_media_coverage_remote_article']);
+}

@@ -8,6 +8,6 @@ dependencies:
 
 
 # Information
-version: '2.0.1'
-project: 'UBC APSC'
-datestamp: 1737401115
+version: '2.0.2'
+project: 'ubc_apsc_media_coverage_remote_article'
+datestamp: 1758911620
