@@ -57,6 +57,10 @@ function ubc_apsc_media_coverage_remote_article_form_alter(&$form, FormStateInte
 			foreach($form['field_announcement_type']['widget']['#options'] as $option_key => $option_value)
 				if($option_value == 'External')
 					$external_term_id = $option_key;
+
+			$form['#attached']['drupalSettings']['ubcApscRemoteArticle'] = [
+				'externalTermId' => (string) $external_term_id,
+			];
 			
 			$form['remote_article__url'] = [
 			  '#type' => 'url',
