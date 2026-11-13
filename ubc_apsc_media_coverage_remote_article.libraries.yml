@@ -6,6 +6,8 @@ form-fill-assist:
   js:
     js/form-fill-assist.js: {}
   dependencies:
+    - core/drupal
+    - core/once
     - core/jquery
 ckeditor-update:
   version: 1.x
